@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://github.com/react-native-community/react-native-maps/blob/master/docs/installation.md -->
+<resources>
+    <string name="YOUR_GOOGLE_SERVICES">Your Google Api Key</string>
+</resources>
