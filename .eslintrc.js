@@ -272,5 +272,7 @@ module.exports = {
   },
   'globals': {
     "fetch": false
-  }
-}
+  },
+  root: true,
+  extends: '@react-native-community',
+};
