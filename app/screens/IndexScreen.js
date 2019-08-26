@@ -13,9 +13,14 @@ export default class IndexScreen extends Component {
   }
 
   _iosPosts() {
+    console.warn(this.props.longitude)
     return ( 
       <SafeAreaView style={{flex:1}}>
-        <Posts navigation={this.props.navigation} loaded={this.pageIsLoaded} locationAlert={this._alertForLocationPermission} />
+        <Posts 
+          {...this.props}
+          navigation={this.props.navigation} 
+          loaded={this.pageIsLoaded} 
+          locationAlert={this._alertForLocationPermission} />
       </SafeAreaView>
     )
   }
@@ -31,7 +36,10 @@ export default class IndexScreen extends Component {
           textContent={'Loading...'}
           textStyle={styles.spinnerTextStyle}
         />
-        { ios ? this._iosPosts() : <Posts navigation={this.props.navigation} loaded={this.pageIsLoaded} locationAlert={this._alertForLocationPermission} /> } 
+            { ios ? this._iosPosts() : <Posts {...this.props} 
+              navigation={this.props.navigation} 
+              loaded={this.pageIsLoaded} 
+              locationAlert={this._alertForLocationPermission} /> } 
       </React.Fragment>
     )
   }

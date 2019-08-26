@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList, Alert, TouchableOpacity, Image } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import Geolocation from 'react-native-geolocation-service';
 import { Card } from 'native-base';
 import { Icon } from 'react-native-elements';
 import { Header } from 'react-navigation';
@@ -17,11 +16,16 @@ import { errorMessage } from '../lib/support';
 export default class PostsScreen extends Component {
   constructor(props){
     super(props);
-    this.state = { posts: [], page: 1, refreshing: false, latitude: '', longitude: '', locations: '' };
+    this.state = { posts: [], page: 1, refreshing: false, locations: '' };
   }
 
   componentDidMount() {
-    this._setLocation()
+    const { posts } = this.state
+    console.warn(this.props)
+    getResources(this.setLocations, this.path("locations"))
+    if (posts.length == 0) { 
+      this.setState({ refreshing: true }, () => getResources(this.setPosts, this.path("posts")))
+    }
   }
 
   addPosts = (json) => {
@@ -86,7 +90,8 @@ export default class PostsScreen extends Component {
   }
 
   path(endpoint) {
-    const { page, longitude, latitude } = this.state;
+    const { page } = this.state;
+    const { latitude, longitude } = this.props; 
     switch (endpoint) {
       case "posts":
         return `${endpoint}.json?page=${page}&per_page=4&longitude=${longitude}&latitude=${latitude}`
